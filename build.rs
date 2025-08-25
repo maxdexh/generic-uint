@@ -7,14 +7,16 @@ fn main() -> Result<(), Box<dyn std::error::Error>> {
     let dest_path = Path::new(&out_dir).join("consts.rs");
 
     let mut out = String::new();
-    write_small(&mut out)?;
+    write_nums(&mut out)?;
     std::fs::write(&dest_path, out)?;
 
     Ok(())
 }
 
-fn write_small(mut out: impl std::fmt::Write) -> std::fmt::Result {
-    for i in 2..=256 {
+const MAX_SMALL: u64 = 1024;
+
+fn write_nums(mut out: impl std::fmt::Write) -> std::fmt::Result {
+    for i in 2..=MAX_SMALL {
         writeln!(out, "bisect!(_{i}, {i}, _{h}, _{p});", h = i / 2, p = i % 2)?;
     }
     Ok(())

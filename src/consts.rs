@@ -23,8 +23,6 @@ macro_rules! bisect {
 include!(concat!(env!("OUT_DIR"), "/consts.rs"));
 
 /// [`usize::BITS`] as a [`Uint`](crate::Uint).
-// NOTE: This implementation assumes that size_of::<usize>() <= 256, i.e. it assumes at
-// most a 2048-bit platform (lol)
 pub type UsizeBits = crate::ops::Shl<crate::uint::FromUsize<{ size_of::<usize>() }>, _3>;
 const _: () = assert!(crate::uint::to_usize::<UsizeBits>().unwrap() == usize::BITS as usize);
 
